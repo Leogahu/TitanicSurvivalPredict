@@ -1,4 +1,4 @@
-# run_pipeline.py
+# run_pipeline.py (agregar después de entrenar el modelo)
 from src.data_loader import TitanicDataLoader
 from src.features import FeatureEngineer
 from src.preprocessor import TitanicPreprocessor
@@ -38,27 +38,25 @@ results = trainer.train_and_evaluate(X_train, y_train)
 # 6. Guardar el mejor modelo
 trainer.save_model()
 
-# 7. Generar submission para Kaggle (TODO EN EL MISMO SCRIPT)
+# 7. Guardar el preprocesador entrenado
+print("\n" + "=" * 60)
+print("GUARDANDO PREPROCESADOR")
+print("=" * 60)
+preprocessor.save('models/preprocessor.pkl')
+print("Preprocesador guardado en: models/preprocessor.pkl")
+
+# 8. Generar submission para Kaggle
 print("\n" + "=" * 60)
 print("GENERANDO SUBMISSION PARA KAGGLE")
 print("=" * 60)
 
-# Obtener datos de prueba originales
 test_original = combined_df[combined_df['Dataset'] == 'test'].copy()
-
-# Aplicar feature engineering a los datos de prueba
 test_featured = engineer.create_features(test_original)
-
-# Preprocesar usando el preprocesador ya entrenado
 test_processed = preprocessor.transform(test_featured)
 
-# Cargar el mejor modelo guardado
 best_model = joblib.load('models/best_model.pkl')
-
-# Predecir
 predictions = best_model.predict(test_processed)
 
-# Crear archivo de submission
 submission = pd.DataFrame({
     'PassengerId': test_original['PassengerId'],
     'Survived': predictions
@@ -67,7 +65,7 @@ submission = pd.DataFrame({
 submission.to_csv('submission.csv', index=False)
 print(f"Submission guardada en: submission.csv")
 print(f"Total de predicciones: {len(submission)}")
-print(f"Distribución de predicciones:")
+print(f"Distribucion de predicciones:")
 print(submission['Survived'].value_counts())
 
 print("\n" + "=" * 60)

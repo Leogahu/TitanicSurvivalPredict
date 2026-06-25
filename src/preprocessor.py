@@ -136,3 +136,34 @@ class TitanicPreprocessor:
 
         self.logger.info("Transformación de prueba completada.")
         return df_scaled
+
+    def save(self, filepath: str = 'models/preprocessor.pkl'):
+        """
+        Guarda el preprocesador entrenado en disco.
+        """
+        import joblib
+        import os
+        
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        joblib.dump({
+            'scaler': self.scaler,
+            'feature_columns': self.feature_columns
+        }, filepath)
+        self.logger.info(f"Preprocesador guardado en: {filepath}")
+
+    def load(self, filepath: str = 'models/preprocessor.pkl'):
+        """
+        Carga un preprocesador guardado desde disco.
+        """
+        import joblib
+        from pathlib import Path
+        
+        if not Path(filepath).exists():
+            self.logger.warning(f"No se encontró preprocesador en: {filepath}")
+            return False
+        
+        data = joblib.load(filepath)
+        self.scaler = data['scaler']
+        self.feature_columns = data['feature_columns']
+        self.logger.info(f"Preprocesador cargado desde: {filepath}")
+        return True

@@ -142,14 +142,20 @@ cython_debug/
 *.swo
 *~
 
-# Project specific
+# Data files (los datos originales no se suben)
 data/*.csv
 data/*.zip
 data/*.xlsx
-models/*.pkl
-models/*.joblib
-submission*.csv
+
+# Archivos de log
 *.log
+
+# Archivos de submission generados
+submission*.csv
+
+# Archivos temporales
+*.tmp
+*.temp
 
 # OS generated files
 .DS_Store

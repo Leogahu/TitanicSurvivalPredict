@@ -11,6 +11,11 @@ class FeatureEngineer:
     """
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+        # Definir los bins una sola vez para consistencia
+        self.age_bins = [0, 12, 18, 35, 60, 100]
+        self.age_labels = ['Child', 'Teen', 'YoungAdult', 'Adult', 'Senior']
+        self.fare_bins = [0, 10, 30, 60, 600]  # Definir bins fijos
+        self.fare_labels = ['Low', 'Medium', 'High', 'VeryHigh']
 
     def create_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -30,12 +35,21 @@ class FeatureEngineer:
         # 2. Tamaño de la familia
         df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
 
-        # 3. Agrupar edades (bins)
-        df['AgeBin'] = pd.cut(df['Age'], bins=[0, 12, 18, 35, 60, 100], 
-                             labels=['Child', 'Teen', 'YoungAdult', 'Adult', 'Senior'])
+        # 3. Agrupar edades usando bins consistentes
+        df['AgeBin'] = pd.cut(
+            df['Age'], 
+            bins=self.age_bins, 
+            labels=self.age_labels,
+            include_lowest=True
+        )
 
-        # 4. Agrupar tarifas (bins)
-        df['FareBin'] = pd.qcut(df['Fare'], 4, labels=['Low', 'Medium', 'High', 'VeryHigh'], duplicates='drop')
+        # 4. Agrupar tarifas usando bins consistentes
+        df['FareBin'] = pd.cut(
+            df['Fare'].fillna(0), 
+            bins=self.fare_bins, 
+            labels=self.fare_labels,
+            include_lowest=True
+        )
 
         # 5. ¿Viajaba solo?
         df['IsAlone'] = (df['FamilySize'] == 1).astype(int)
