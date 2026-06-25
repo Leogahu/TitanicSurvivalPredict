@@ -59,101 +59,39 @@ AnalisisTitanic/
 ├── requirements.txt       # Dependencias del proyecto
 └── run_pipeline.py        # Script principal de ejecución
 
-======================================================================
-GUÍA DE INSTALACIÓN Y USO - TITANIC SURVIVAL PREDICTOR
-======================================================================
+---
 
-----------------------------------------------------------------------
-1. INSTALACIÓN
-----------------------------------------------------------------------
+## Instalacion
+
 Sigue estos pasos en tu terminal para configurar el entorno localmente:
 
-A. Clonar el repositorio:
-   git clone https://github.com/Leogahu/TitanicSurvivalPredict.git
-   cd TitanicSurvivalPredict
+### 1. Clonar el repositorio
 
-B. Crear y activar el entorno virtual:
-   
-   En Windows:
-   python -m venv .venv
-   .venv\Scripts\activate
+```bash
+git clone https://github.com/Leogahu/TitanicSurvivalPredict.git
+cd TitanicSurvivalPredict
 
-   En Linux / macOS:
-   python -m venv .venv
-   source .venv/bin/activate
+### 2. Crear y activar el entorno virtual
 
-C. Instalar dependencias:
-   pip install -r requirements.txt
+**En Windows:**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
 
+**En Linux / macOS:**
+```bash
+python -m venv .venv
+source .venv/bin/activate
 
-----------------------------------------------------------------------
-2. CÓMO USAR
-----------------------------------------------------------------------
-A. Ejecutar el Dashboard:
-   El repositorio ya incluye por defecto el modelo entrenado 
-   (models/best_model.pkl) y el preprocesador (models/preprocessor.pkl).
-   Para inicializar el dashboard interactivo ejecuta:
+### 3. Instalar dependencias
+```bash
+pip install -r requirements.txt
 
-   streamlit run dashboard/app.py
+## Como Usar
 
-   Luego, abre tu navegador web en la dirección local asignada:
-   http://localhost:8501
+### Ejecutar el Dashboard
 
-B. Secciones del Dashboard:
-   - Exploración de Datos: 
-     Visualización y análisis exploratorio (EDA) de los datos del Titanic.
-   - Predicción Individual: 
-     Formulario en tiempo real para predecir la supervivencia de un pasajero específico.
-   - Acerca de: 
-     Información detallada sobre el proyecto y las tecnologías integradas.
+El repositorio ya incluye el modelo entrenado (`models/best_model.pkl`) y el preprocesador (`models/preprocessor.pkl`). Para iniciar el dashboard:
 
-C. Re-entrenar el Modelo (Opcional):
-   Si deseas volver a entrenar los algoritmos con los datos originales:
-   1. Descarga los archivos de data desde la competición de Kaggle: Titanic Data
-   2. Coloca los archivos train.csv y test.csv dentro de la carpeta local data/
-   3. Ejecuta el pipeline principal en tu terminal:
-
-   python run_pipeline.py
-
-   Esto evaluará los modelos candidatos de forma automática, actualizará 
-   el archivo guardado con el mejor resultado en la carpeta models/ y 
-   generará un archivo submission.csv óptimo para Kaggle.
-
-
-----------------------------------------------------------------------
-3. TECNOLOGÍAS UTILIZADAS
-----------------------------------------------------------------------
-- Python 3.14:   Lenguaje principal del ecosistema.
-- Pandas:        Procesamiento y manipulación de datos estructurados.
-- NumPy:         Operaciones matemáticas y cálculo matricial.
-- Scikit-learn:  Modelado de Machine Learning, métricas y preprocesamiento.
-- Streamlit:     Creación y despliegue del dashboard interactivo.
-- Plotly:        Diseño de visualizaciones de gráficos dinámicos.
-- Joblib:        Serialización, guardado y carga de modelos entrenados.
-
-
-----------------------------------------------------------------------
-4. CARACTERÍSTICAS UTILIZADAS (FEATURE ENGINEERING)
-----------------------------------------------------------------------
-El modelo final analiza un total de 22 características transformadas a 
-partir de las siguientes variables base:
-
-- Datos Básicos: 
-  Pclass, Sex, Age, SibSp, Parch, Fare, Embarked.
-
-- Ingeniería de Variables (Feature Engineering):
-  * Title: Extracción de títulos de cortesía (Mr, Mrs, Miss, Master, etc.).
-  * FamilySize: Total de miembros del núcleo familiar a bordo.
-  * IsAlone: Variable binaria que identifica si el pasajero viajaba sin acompañantes.
-
-- Categorizaciones (Binning):
-  * AgeBin: Segmentación de edades estructurada en 5 rangos específicos.
-  * FareBin: Distribución del costo del billete en 4 rangos de precios (cuartiles).
-
-
-----------------------------------------------------------------------
-5. INFORMACIÓN DEL AUTOR
-----------------------------------------------------------------------
-- Autor: Leonardo G.
-- GitHub: @Leogahu
-======================================================================
+```bash
+streamlit run dashboard/app.py
